@@ -1,4 +1,14 @@
-function knightMoves() {}
+function knightMoves(knightStartingPosition, targetPosition) {
+  let [knightX, knightY] = knightStartingPosition;
+  const knight = createKnight(knightX, knightY);
+  const board = createGameBoard();
+  let shortestPath = findShortestPath();
+  let legalMoves = knight.generateAllPossibleMoves();
+
+  function findShortestPath() {
+    // here i'll implement mine recursive function
+  }
+}
 
 function createKnight(horizontal, vertical) {
   let x = horizontal;
@@ -67,7 +77,6 @@ function createKnight(horizontal, vertical) {
 
 function createGameBoard() {
   const board = [];
-  const size = board.length;
   for (let i = 0; i < 8; i++) {
     board[i] = [];
     for (let j = 0; j < 8; j++) {
@@ -76,11 +85,12 @@ function createGameBoard() {
   }
   function placeKnight(position) {
     [x, y] = position;
-    board[x][y] = 'knight';
+    board[x][y] = null;
   }
   return {
     board,
-    size,
     placeKnight,
   };
 }
+
+knightMoves([3, 3], [0, 0]);
