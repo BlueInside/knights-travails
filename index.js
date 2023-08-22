@@ -1,11 +1,6 @@
-function createKnight(coords, previousMove) {
+function createKnight(coords, previousMoves = []) {
   const [x, y] = coords;
   let position = [x, y];
-  let previousMoves = [];
-  if (!previousMove) previousMoves.push(coords);
-  else {
-    previousMoves.push(previousMove, coords);
-  }
   let childMoves = generateAllPossibleMoves(position);
   function generateAllPossibleMoves(position) {
     const result = [];
@@ -90,9 +85,15 @@ function knightMoves(knightsCurrentPosition, targetPosition) {
   let gameBoard = createGameBoard();
   const { board, placeKnight } = gameBoard;
   let shortestPath = findShortestPath(knightsCurrentPosition);
+  function printPretty(array) {
+    console.log(`You made it in ${array.length} heres your path:`);
+    for (let index = 0; index < array.length; index++) {
+      console.log(`[${array[index]}]`);
+    }
+  }
 
   function findShortestPath(currentKnight, gameBoard = board, queue = []) {
-    const knight = createKnight(currentKnight);
+    const knight = createKnight(currentKnight, [currentKnight]);
     queue.push(knight);
     let result;
     while (queue.length > 0) {
@@ -116,16 +117,18 @@ function knightMoves(knightsCurrentPosition, targetPosition) {
       const possibleMoves = currentElement.childMoves;
 
       for (const possibleMove of possibleMoves) {
-        const knight = createKnight(
+        const newPreviousMoves = [
+          ...currentElement.previousMoves,
           possibleMove,
-          previousElement.previousMoves
-        );
+        ];
+        const knight = createKnight(possibleMove, newPreviousMoves);
         queue.push(knight);
       }
     }
     return result;
   }
-  return shortestPath;
+
+  printPretty(shortestPath);
 }
 
-console.log(knightMoves([0, 0], [3, 3]));
+console.log(knightMoves([0, 0], [7, 7]));
