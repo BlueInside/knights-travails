@@ -1,15 +1,3 @@
-function knightMoves(knightStartingPosition, targetPosition) {
-  let [knightX, knightY] = knightStartingPosition;
-  const knight = createKnight(knightX, knightY);
-  const board = createGameBoard();
-  let shortestPath = findShortestPath();
-  let legalMoves = knight.generateAllPossibleMoves();
-
-  function findShortestPath() {
-    // here i'll implement mine recursive function
-  }
-}
-
 function createKnight(horizontal, vertical) {
   let x = horizontal;
   let y = vertical;
@@ -87,10 +75,47 @@ function createGameBoard() {
     [x, y] = position;
     board[x][y] = null;
   }
+  function isLegalMove(x, y) {
+    if (x < 0 || x > 7) return false;
+    else if (y < 0 || y > 7) return false;
+    else return true;
+  }
+  function printBoard() {
+    for (let i = 0; i < board.length; i++) {
+      console.log(
+        board[i].map((cell) => (cell === null ? 'null' : cell)).join(' ')
+      );
+    }
+  }
   return {
     board,
     placeKnight,
+    isLegalMove,
+    printBoard,
   };
 }
+function knightMoves(
+  knightsCurrentPosition,
+  targetPosition,
+  path = [],
+  board = createGameBoard()
+) {
+  let [knightX, knightY] = knightsCurrentPosition;
+  let knight = createKnight(knightX, knightY);
+  let legalMoves = knight.generateAllPossibleMoves();
+  let shortestPath = findShortestPath(knightsCurrentPosition);
 
-knightMoves([3, 3], [0, 0]);
+  function findShortestPath(knightsCurrentPosition, targetPosition) {
+    let [x, y] = knightsCurrentPosition;
+    if ((x === knightsCurrentPosition[0], y === knightsCurrentPosition[1])) {
+      path.push(knightsCurrentPosition);
+      return path;
+    }
+    if (board[x][y] === null) return;
+    board.placeKnight(1, 2);
+  }
+}
+
+knightMoves([0, 0], [1, 2]);
+const board = createGameBoard();
+board.placeKnight([3, 3]);
