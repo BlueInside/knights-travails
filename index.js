@@ -131,4 +131,4 @@ function knightMoves(knightsCurrentPosition, targetPosition) {
   printPretty(shortestPath);
 }
 
-console.log(knightMoves([0, 0], [7, 7]));
+console.log(knightMoves([2, 3], [6, 5]));
